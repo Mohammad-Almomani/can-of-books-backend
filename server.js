@@ -12,15 +12,15 @@ app.use(cors());
 
 createBook();
 
+const bookModel = mongoose.model('bookModel');
 const PORT = process.env.PORT || 3001;
 app.get('/books', (req,res)=>{
-  const bookModel = mongoose.model('bookModel');
+  
 
   bookModel.find({}, (error, data) => {
     if (error) console.log(`error reading from the db: ${error}`);
     else res.send(data);
 })
-
 })
 
 
