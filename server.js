@@ -40,13 +40,8 @@ app.get('/books', (req,res)=>{
     if (error) console.log(`error reading from the db: ${error}`);
     else res.send(data);
 })
-// res.send("hello test")
 })
 app.get('/', (req,res)=>{
-  //   BookModel.find({}, (error, data) => {
-  //     if (error) console.log(`error reading from the db: ${error}`);
-  //     else res.send(data);
-  // })
   res.send("hello home page")
   })
 
@@ -60,4 +55,17 @@ function createNewBook (req,res) {
   const {newBook} = req.body;
   const book = new BookModel(newBook);
   book.save();
+  res.status(201).json(book)
+}
+
+app.delete('/books/:id', deleteBook)
+
+function deleteBook (req,res){
+  const id = req.params.id;
+  console.log(id)
+  BookModel.findByIdAndDelete(id).then(sendRec =>{
+    res.send(sendRec);
+  }).catch (error => {
+    res.send(error)
+  })
 }
