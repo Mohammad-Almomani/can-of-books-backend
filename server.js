@@ -36,11 +36,11 @@ mongoose.connect(`${process.env.MONGO_URI}/books`);
 const PORT = process.env.PORT || 3001;
 
 app.get('/books', (req,res)=>{
-//   BookModel.find({}, (error, data) => {
-//     if (error) console.log(`error reading from the db: ${error}`);
-//     else res.send(data);
-// })
-res.send("hello test")
+  BookModel.find({}, (error, data) => {
+    if (error) console.log(`error reading from the db: ${error}`);
+    else res.send(data);
+})
+// res.send("hello test")
 })
 app.get('/', (req,res)=>{
   //   BookModel.find({}, (error, data) => {
