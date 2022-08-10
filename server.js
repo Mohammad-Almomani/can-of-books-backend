@@ -9,6 +9,7 @@ const BookModel = require('./Moduels/Schema');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 
 const Book1 = new BookModel ({
@@ -35,15 +36,28 @@ mongoose.connect(`${process.env.MONGO_URI}/books`);
 const PORT = process.env.PORT || 3001;
 
 app.get('/books', (req,res)=>{
-  BookModel.find({}, (error, data) => {
-    if (error) console.log(`error reading from the db: ${error}`);
-    else res.send(data);
+//   BookModel.find({}, (error, data) => {
+//     if (error) console.log(`error reading from the db: ${error}`);
+//     else res.send(data);
+// })
+res.send("hello test")
 })
-})
+app.get('/', (req,res)=>{
+  //   BookModel.find({}, (error, data) => {
+  //     if (error) console.log(`error reading from the db: ${error}`);
+  //     else res.send(data);
+  // })
+  res.send("hello home page")
+  })
 
-
+app.post('/books', createNewBook)
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 
 
+function createNewBook (req,res) {
+  const {newBook} = req.body;
+  const book = new BookModel(newBook);
+  book.save();
+}
